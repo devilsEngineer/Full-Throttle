@@ -84,6 +84,26 @@ class UserActivityView(viewsets.ModelViewSet):
 
 class UserAndActivityView(viewsets.ModelViewSet):
 
+    def getAllUserAndActivity(self, request):
+        """
+        API to serve data as that of given Json file.
+        """
+        user_details=User.objects.all()
+        user_data = UserSerializer(user_details,many=True).data
+        
+        for user in user_data:
+            user_activity=ActivityPeriod.objects(user_id=user['user_id'])
+            activity_serializer = ActivityPeriodSerializer(user_activity,many=True)
+            activity_periods = []
+            for activity in activity_serializer.data:
+                del activity['id']
+                del activity['user_id']
+                activity_periods.append(activity)
+            user["activity_periods"] = activity_periods
+            user['id'] = user['user_id']
+            del user['user_id']
+        return Response({"ok":True,"members":user_data}, status=status.HTTP_200_OK)
+
     def getUserAndActivity(self, request):
         if 'id' in request.query_params and request.query_params is not None:
             try:
