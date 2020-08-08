@@ -1,6 +1,5 @@
 # Design and implement a Django application with User and ActivityPeriod models
-	
-	
+
 ## Techniques
 - Python3
 - Django
@@ -9,8 +8,13 @@
 
 ## Custom Management Command
  - python manage.py user_activity_command 5
-
-## API's are listed below:
+ 
+ ## API to server as that of given Json file
+ 	```
+ 	- method = GET
+ 	- api = http://127.0.0.1:8000/full_throttle/get_test_data
+	```
+## Other API's are listed below:
 
     - To get user data and activity periods of a user with the help of 'id':
 
